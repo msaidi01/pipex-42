@@ -6,7 +6,7 @@
 /*   By: msaidi <msaidi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 09:51:16 by msaidi            #+#    #+#             */
-/*   Updated: 2023/02/13 15:35:04 by msaidi           ###   ########.fr       */
+/*   Updated: 2023/02/14 11:19:12 by msaidi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ char	*test_path(char	**to_test, char *path)
 		final_path = join_path(to_test[i], path);
 		if (!access(final_path, F_OK | X_OK))
 			return (final_path);
+		free(final_path);
 		i++;
 	}
-	free(final_path);
 	final_path = NULL;
 	perror("command not found");
 	return (NULL);

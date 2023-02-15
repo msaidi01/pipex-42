@@ -53,7 +53,7 @@ void	cmd2(int *fd, char **av, char **envp)
 	cmd2 = ft_split(av[3], ' ');
 	if (cmd2 == NULL)
 	{
-		write(2, "command empty \n", 16);
+		write(2, "command empty\n", 15);
 		exit(1);
 	}
 	path = find_path(envp);
@@ -69,15 +69,21 @@ void	cmd2(int *fd, char **av, char **envp)
 	close(fd[1]);
 	execve(final_path, cmd2, envp);
 }
+
+// void ft_leaks()
+// {
+// 	system("leaks pipex");
+// }
 int	main(int ac, char *av[], char *envp[])
 {
 	int		fd[2];
 	int		pipechk;
 	pid_t	pid[2];
 
+
 	if (ac != 5)
 	{
-		printf("invalid number of args");
+		write(2, "invalid number of args\n", 24);
 		exit(1);
 	}
 	pipechk = pipe(fd);
@@ -90,6 +96,7 @@ int	main(int ac, char *av[], char *envp[])
 	if_error(pid[1]);
 	if (!pid[1])
 		cmd2(fd, av, envp);
-	wait(0);
+	waitpid(pid[0], NULL, 0);
+	waitpid(pid[1], NULL, 0);
 	return (0);
 }
